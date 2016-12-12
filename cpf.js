@@ -22,11 +22,13 @@
                     e.target.removeAttribute('data-invalid');
                     e.target.setAttribute('data-valid', true);
                     e.target.setAttribute('style', 'color:green');
+                    e.target.setAttribute('data-region', region(e.target.value));
                 } else {
                     // seta as configurações
                     e.target.removeAttribute('data-valid');
+                    e.target.removeAttribute('data-region');
                     e.target.setAttribute('data-invalid', true);
-                    e.target.setAttribute('style', 'color:red')
+                    e.target.setAttribute('style', 'color:red');
                 }
             } else if(e.target.value.length < 11){
                 // remove as cores
@@ -43,6 +45,74 @@
      */
     function mask(cpf){
         return cpf.replace(/\D/g,"").replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/g,"$1.$2.$3-$4");
+    }
+
+    /* region(id) - função responsavel em informar de onde é o cpf */
+    function region(cpf) {
+        // armazenas as regioes
+        var r = [];
+        // remove os pontos e tracos
+        var cpf = cpf.replace(/[\.-]/g,'');
+        // pega o id da cidade
+        var id = cpf[cpf.length-3];
+
+        switch(id) {
+            case '0':
+                r = ['Rio Grande do Sul'];
+            break;
+
+            case '1':
+                r = ['Distrito Federal',
+                     'Goiás',
+                     'Mato Grosso do Sul',
+                     'Tocantins'];
+            break;
+
+            case '2':
+                r = ['Pará',
+                     'Amazonas',
+                     'Acre',
+                     'Amapá'];
+            break;
+
+            case '3':
+                r = ['Ceará',
+                     'Maranhão',
+                     'Piauí'];
+            break;
+
+            case '4':
+                r = ['Pernambuco',
+                     'Rio Grande do Norte',
+                     'Paraíba',
+                     'Alagoas'];
+            break;
+
+            case '5':
+                r = ['Bahia',
+                     'Sergipe'];
+            break;
+
+            case '6':
+                r = ['Minas Gerais'];
+            break;
+
+            case '7':
+                r = ['Rio de Janeiro',
+                     'Espírito Santo'];
+            break;
+
+            case '8':
+                r = ['São Paulo'];
+            break;
+
+            case '9':
+                r = ['Paraná',
+                     'Santa Catarina'];
+            break;
+        }
+
+        return r;
     }
 
     /*
